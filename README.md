@@ -9,7 +9,9 @@
 -------
 
 ###导入依赖
+
 ####gradle
+
         allprojects {
                 repositories {
                     ...
@@ -20,7 +22,9 @@
         dependencies {
         	        implementation 'com.github.269138004:SimplePhotoPicker:v1.0'
         	}
+        	
 ####maven
+
         <repositories>
             <repository>
                 <id>jitpack.io</id>
@@ -33,7 +37,9 @@
         	    <artifactId>SimplePhotoPicker</artifactId>
         	    <version>v1.0</version>
         </dependency>
+        
 ####使用
+
     new AlbumHelper()
         .with(MainActivity.this)
         .setPickPhotoNums(5)//可选图片数量，默认1
