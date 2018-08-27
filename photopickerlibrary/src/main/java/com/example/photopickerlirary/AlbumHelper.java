@@ -46,7 +46,7 @@ public class AlbumHelper {
         return this;
     }
 
-    public AlbumHelper setCamearImg(int camearImg){
+    public AlbumHelper setCameraImg(int camearImg){
         this.camearImg = camearImg;
         return this;
     }
