@@ -7,7 +7,8 @@
 
 使用方法
 -------
-'''
+
+
                     new AlbumHelper()
                         .with(MainActivity.this)
                         .setPickPhotoNums(5)
@@ -21,4 +22,5 @@
                                 adapter_one.notifyDataSetChanged();
                             }
                         }).start();
-'''
+
+
