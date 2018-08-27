@@ -8,9 +8,9 @@
 使用方法
 -------
 
-###导入依赖
+### 导入依赖
 
-####gradle
+#### gradle
 
         allprojects {
                 repositories {
@@ -23,7 +23,7 @@
         	        implementation 'com.github.269138004:SimplePhotoPicker:v1.0'
         	}
         	
-####maven
+#### maven
 
         <repositories>
             <repository>
@@ -38,7 +38,7 @@
         	    <version>v1.0</version>
         </dependency>
         
-####使用
+#### 使用
 
     new AlbumHelper()
         .with(MainActivity.this)
