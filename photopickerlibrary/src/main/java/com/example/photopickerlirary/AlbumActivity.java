@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gyf.barlibrary.ImmersionBar;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -54,7 +53,8 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_album);
-        ImmersionBar.with(this).statusBarDarkFont(true , 0.2f).init();
+        StatusBarUtil.setLightMode(this);
+        StatusBarUtil.setColorNoTranslucent(this, getResources().getColor(R.color.white));
         initIntent();
         initView();
     }
@@ -214,6 +214,10 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
                     photoPath.add(1 , photoBean);
                     albumAdapter.notifyDataSetChanged();
                 }
+            }
+        }else {
+            if (tempFile != null){
+                tempFile.delete();
             }
         }
     }

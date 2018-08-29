@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.util.List;
 
 public class DisplayAdapter extends RecyclerView.Adapter<DisplayAdapter.DisplayAdapter_VH> {
@@ -32,7 +35,7 @@ public class DisplayAdapter extends RecyclerView.Adapter<DisplayAdapter.DisplayA
 
     @Override
     public void onBindViewHolder(@NonNull DisplayAdapter_VH displayAdapter_vh, int i) {
-        displayAdapter_vh.display_img.setImageBitmap(BitmapFactory.decodeFile(list.get(i)));
+        Glide.with(context).load(list.get(i)).into(displayAdapter_vh.display_img);
     }
 
     @Override

@@ -13,6 +13,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.MemoryCategory;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
@@ -57,11 +60,13 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumAdapter
             if (camearImg != 0){
                 Glide.with(context).load(camearImg).into(holder.album_item_img);
             }else {
-                Glide.with(context).load(R.drawable.ic_launcher).into(holder.album_item_img);
+                Glide.with(context).load(R.drawable.camera).into(holder.album_item_img);
             }
         }else {//图片
             holder.album_item_select.setVisibility(View.VISIBLE);
-            Glide.with(context).load(bean.getPath()).thumbnail(0.4f).into(holder.album_item_img);
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.diskCacheStrategy(DiskCacheStrategy.DATA);
+            Glide.with(context).load(bean.getPath()).apply(requestOptions).thumbnail(0.4f).into(holder.album_item_img);
             if (bean.isSelected()){
                 if (selectImg != 0){
                     holder.album_item_select.setImageResource(selectImg);
