@@ -2,39 +2,56 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:gravity="center"
+    android:id="@+id/album_container"
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <View
+    <LinearLayout
+        android:id="@+id/album_old_title"
         android:layout_width="match_parent"
-        android:layout_height="25dp"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="相册"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:layout_centerInParent="true"/>
-        <TextView
-            android:layout_alignParentBottom="true"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/black"/>
-        <TextView
-            android:id="@+id/album_commit"
+            android:layout_height="25dp"/>
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:text="完成"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:gravity="center"
-            android:textColor="@color/black"/>
-    </RelativeLayout>
+            android:layout_height="45dp">
+            <TextView
+                android:id="@id/album_title_back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:text="返回"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:gravity="center"
+                android:textColor="@color/black"/>
+            <TextView
+                android:id="@id/album_title_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="相册"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:layout_centerInParent="true"/>
+            <TextView
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/black"/>
+            <TextView
+                android:id="@id/album_title_finish"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:text="完成"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:gravity="center"
+                android:textColor="@color/black"/>
+        </RelativeLayout>
+    </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:layout_marginTop="5dp"
         android:id="@+id/recycler"

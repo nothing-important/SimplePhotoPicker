@@ -1,5 +1,5 @@
 # SimplePhotoPicker
-一个进入相册，调用相机的简单框架，持续维护中...
+一个进入相册，调用相机的**可高度定制化**的框架，持续维护中...
 
 效果图
 ---------------
@@ -17,7 +17,7 @@
 ##### 1.进入相册调用相机
 ##### 2.设置可选图片数量
 ##### 3.第二次进入时记录上次选中图片
-##### 4.设置选中icon、未选中icon、相机icon
+##### 4.设置选中icon、未选中icon、相机icon、界面的titleView
 ##### 5.以回调监听选中结果，使用方便
 ##### 6.动态设置了Imageview的宽高，几乎可以适配所有屏幕
 
@@ -63,6 +63,7 @@
         .setSelectImg(R.mipmap.ic_launcher)//设置图片选中表示，可不写，有默认
         .setUnSelectImg(R.mipmap.ic_launcher)//设置图片未选中表示，可不写，有默认
         .setCameraImg(R.mipmap.ic_launcher)//设置相机图片icon，可不写，有默认
+        .setTitleView(R.layout.title_view)//设置界面的titleView
         .setOnReceiveResultListener(new SelectPhotoResult() {//选择完图片后的回调，在这里做ui刷新操作
             @Override
             public void onReceivePhotoResult(ArrayList<String> resultList) {
@@ -71,5 +72,14 @@
                 adapter_one.notifyDataSetChanged();
             }
         }).start();//开始
+    
+    
+##### 关于设置界面的titleview
+    
+    titleview的布局可以自己随意设置，但是有三个主要功能键需要加上固定的id
+        1、界面的返回功能-->设置固定id：album_title_back
+        2、界面的title-->设置固定id：album_title_name
+        3、界面的提交功能-->设置固定id：album_title_finish
+        不要自己随意设置id，一定要使用这三个固定id
 
 

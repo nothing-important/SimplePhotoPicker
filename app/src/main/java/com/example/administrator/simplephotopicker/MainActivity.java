@@ -1,6 +1,5 @@
 package com.example.administrator.simplephotopicker;
 
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import com.example.photopickerlirary.AlbumHelper;
 import com.example.photopickerlirary.SelectPhotoResult;
@@ -59,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 new AlbumHelper()
                         .with(MainActivity.this)
                         .setPickPhotoNums(5)
+                        .setTitleView(R.layout.title_view)
                         .setResultPhotoList((ArrayList<String>) list_one)
                         .setOnReceiveResultListener(new SelectPhotoResult() {
                             @Override

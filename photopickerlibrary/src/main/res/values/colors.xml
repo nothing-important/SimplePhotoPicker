@@ -3,4 +3,5 @@
     <color name="white">#fff</color>
     <color name="black">#000</color>
     <color name="bg1">#f2f4f7</color>
+    <color name="transprent">#00000000</color>
 </resources>

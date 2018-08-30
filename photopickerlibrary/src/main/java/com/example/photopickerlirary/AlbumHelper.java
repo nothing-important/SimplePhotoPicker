@@ -14,7 +14,7 @@ public class AlbumHelper {
     private Context context;
     private int pickPhotoNums = 1;
     private ArrayList<String> photoList = new ArrayList<>();
-    private int selectImg = 0 , unSelectImg = 0 , camearImg = 0;
+    private int selectImg = 0 , unSelectImg = 0 , camearImg = 0 , titleView = 0;
 
     public AlbumHelper with(Context context){
         this.context = context;
@@ -36,6 +36,11 @@ public class AlbumHelper {
         return this;
     }
 
+    public AlbumHelper setTitleView(int titleView){
+        this.titleView = titleView;
+        return this;
+    }
+
     public AlbumHelper setSelectImg(int selectImg){
         this.selectImg = selectImg;
         return this;
@@ -52,7 +57,7 @@ public class AlbumHelper {
     }
 
     public void start(){
-        AlbumActivity.toAlbumActivity(context , pickPhotoNums , photoList , selectImg , unSelectImg , camearImg);
+        AlbumActivity.toAlbumActivity(context , pickPhotoNums , photoList , selectImg , unSelectImg , camearImg , titleView);
     }
 
 }

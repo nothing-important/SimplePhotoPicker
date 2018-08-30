@@ -2,4 +2,7 @@
 <resources>
     <item type="id" name="statusbarutil_fake_status_bar_view" />
     <item type="id" name="statusbarutil_translucent_view" />
+    <item type="id" name="album_title_back" />
+    <item type="id" name="album_title_name" />
+    <item type="id" name="album_title_finish" />
 </resources>

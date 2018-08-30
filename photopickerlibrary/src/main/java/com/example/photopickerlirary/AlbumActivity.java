@@ -11,7 +11,9 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,8 +38,9 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
     public static final String ADAPTER_SELECT_IMG = "adapter_select_img";
     public static final String ADAPTER_UNSELECT_IMG = "adapter_unselect_img";
     public static final String ADAPTER_CAMEAR_IMG = "adapter_camear_img";
+    public static final String ALBUM_TITLE_VIEW = "album_title_view";
 
-    private int selectImg , unSelectImg , camearImg;
+    private int selectImg , unSelectImg , camearImg , titleView;
 
     private List<PhotoParentBean> parentNameList = new ArrayList<>();//所有的父文件夹
     private List<PhotoBean> photoPath = new ArrayList<>();//所有图片的文件夹
@@ -48,13 +51,14 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
 
     private static SelectPhotoResult selectPhotoResult;
     private ArrayList<String> listExtra;
+    private LinearLayout album_container , album_old_title;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_album);
         StatusBarUtil.setLightMode(this);
-        StatusBarUtil.setColorNoTranslucent(this, getResources().getColor(R.color.white));
+        StatusBarUtil.setColorNoTranslucent(this, getResources().getColor(R.color.transprent));
         initIntent();
         initView();
     }
@@ -67,6 +71,7 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
         selectImg = intent.getIntExtra(ADAPTER_SELECT_IMG , 0);
         unSelectImg = intent.getIntExtra(ADAPTER_UNSELECT_IMG , 0);
         camearImg = intent.getIntExtra(ADAPTER_CAMEAR_IMG , 0);
+        titleView = intent.getIntExtra(ALBUM_TITLE_VIEW , 0);
         if (listExtra == null)return;
         for (int i = 0; i < listExtra.size() ; i ++){
             PhotoBean bean = new PhotoBean();
@@ -84,8 +89,27 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
         albumAdapter.setOnPhotoClickListener(this);
         recycler.setAdapter(albumAdapter);
         requestReadPermission();
-        TextView album_commit = findViewById(R.id.album_commit);
-        album_commit.setOnClickListener(this);
+        if (titleView != 0){
+            album_container = findViewById(R.id.album_container);
+            album_old_title = findViewById(R.id.album_old_title);
+            album_container.removeView(album_old_title);
+            View newView = LayoutInflater.from(this).inflate(titleView , album_container , false);
+            album_container.addView(newView , 0);
+        }
+        View album_commit = findViewById(R.id.album_title_finish);
+        View album_name = findViewById(R.id.album_title_name);
+        View album_back = findViewById(R.id.album_title_back);
+        if (album_back != null){
+            album_back.setOnClickListener(this);
+        }else {
+            Toast.makeText(this, "you don't set back button and don't set back id", Toast.LENGTH_LONG).show();
+        }
+        if (album_commit != null){
+            album_commit.setOnClickListener(this);
+        }else {
+            Toast.makeText(this, "you don't set finish button and don't set finish id", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     @Override
@@ -225,7 +249,7 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
     @Override
     public void onClick(View view) {
         int i = view.getId();
-        if (i == R.id.album_commit) {
+        if (i == R.id.album_title_finish) {
             if (selectPhotoResult == null){
                 Log.e(TAG, "onClick: SelectPhotoResult is null");
                 return;
@@ -237,16 +261,19 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
             selectPhotoResult.onReceivePhotoResult(listExtra);
             selectPhotoResult = null;
             finish();
+        }else if (i == R.id.album_title_back){
+            finish();
         }
     }
 
-    public static void toAlbumActivity(Context context , int pickPhotoNums , ArrayList<String> list , int selectImg , int unSelectImg , int camearImg){
+    public static void toAlbumActivity(Context context , int pickPhotoNums , ArrayList<String> list , int selectImg , int unSelectImg , int camearImg , int titleView){
         Intent intent = new Intent(context , AlbumActivity.class);
         intent.putExtra(PICK_PHOTO_NUMS_FLAG , pickPhotoNums);
         intent.putStringArrayListExtra(ALREADY_PICK_PHOTO_LIST , list);
         intent.putExtra(ADAPTER_SELECT_IMG , selectImg);
         intent.putExtra(ADAPTER_UNSELECT_IMG , unSelectImg);
         intent.putExtra(ADAPTER_CAMEAR_IMG , camearImg);
+        intent.putExtra(ALBUM_TITLE_VIEW , titleView);
         context.startActivity(intent);
     }
 
