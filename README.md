@@ -4,7 +4,7 @@
 效果图
 ---------------
 
-![image](https://github.com/269138004/SimplePhotoPicker/blob/master/imgs/pic_001.png)
+<img src="https://github.com/269138004/SimplePhotoPicker/blob/master/imgs/pic_001.png" width="320" height="480">
 
 目前实现的功能
 --------------
