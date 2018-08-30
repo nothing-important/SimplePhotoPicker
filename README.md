@@ -4,11 +4,8 @@
 效果图
 ---------------
 <div>
-<img style="display:inline;" src="https://github.com/269138004/SimplePhotoPicker/blob/master/imgs/pic_002.png" width="260" height="480">
-
-
-
-<img style="display:inline;" src="https://github.com/269138004/SimplePhotoPicker/blob/master/imgs/pic_001.png" width="260" height="480">
+<img style="display:inline-bloak;margin-right:30px" src="https://github.com/269138004/SimplePhotoPicker/blob/master/imgs/pic_002.png" width="260" height="480">
+<img style="display:inline-bloak;" src="https://github.com/269138004/SimplePhotoPicker/blob/master/imgs/pic_001.png" width="260" height="480">
 </div>
 
 目前实现的功能
