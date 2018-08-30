@@ -50,7 +50,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumAdapter
     @Override
     public void onBindViewHolder(@NonNull final AlbumAdapter_VH holder, final int position) {
         final PhotoBean bean = list.get(position);
-        holder.album_item_select.setImageResource(R.drawable.icon_circle);
+        holder.album_item_select.setImageResource(R.drawable.icon_unselect);
         final FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) holder.album_item_img.getLayoutParams();
         layoutParams.width = viewWidth;
         layoutParams.height = viewWidth;
@@ -71,13 +71,13 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumAdapter
                 if (selectImg != 0){
                     holder.album_item_select.setImageResource(selectImg);
                 }else {
-                    holder.album_item_select.setImageResource(R.drawable.icon_duigou);
+                    holder.album_item_select.setImageResource(R.drawable.icon_select);
                 }
             }else {
                 if (unSelectImg != 0){
                     holder.album_item_select.setImageResource(unSelectImg);
                 }else {
-                    holder.album_item_select.setImageResource(R.drawable.icon_circle);
+                    holder.album_item_select.setImageResource(R.drawable.icon_unselect);
                 }
             }
         }

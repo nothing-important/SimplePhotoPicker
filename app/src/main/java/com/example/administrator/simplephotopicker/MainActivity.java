@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .with(MainActivity.this)
                         .setPickPhotoNums(5)
                         .setResultPhotoList((ArrayList<String>) list_one)
-                        .setSelectImg(R.mipmap.ic_launcher)
                         .setOnReceiveResultListener(new SelectPhotoResult() {
                             @Override
                             public void onReceivePhotoResult(ArrayList<String> resultList) {
