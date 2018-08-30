@@ -4,6 +4,7 @@
 效果图
 ---------------
 
+<img src="https://github.com/269138004/SimplePhotoPicker/blob/master/imgs/pic_002.png" width="260" height="480">
 <img src="https://github.com/269138004/SimplePhotoPicker/blob/master/imgs/pic_001.png" width="260" height="480">
 
 目前实现的功能
