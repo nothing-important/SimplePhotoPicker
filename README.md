@@ -4,6 +4,8 @@
 效果图
 ---------------
 
+![image](https://github.com/269138004/SimplePhotoPicker/blob/master/imgs/pic_001.png)
+
 目前实现的功能
 --------------
 ##### 1.进入相册调用相机
