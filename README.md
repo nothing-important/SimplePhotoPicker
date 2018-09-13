@@ -6,10 +6,11 @@
 <div>
 <img style="display:inline;"
  src="https://github.com/269138004/SimplePhotoPicker/blob/master/imgs/pic_002.png"
-  width="260" height="480">
+  width="260" height="480"/>
 <img style="display:inline; margin-left:100px" 
  src="https://github.com/269138004/SimplePhotoPicker/blob/master/imgs/pic_001.png"
-  width="260" height="480">
+  width="260" height="480"/>
+<img src="https://github.com/269138004/SimplePhotoPicker/blob/master/imgs/egOne.gif"/>
 </div>
 
 那些你所担心但是已经帮你解决的问题
