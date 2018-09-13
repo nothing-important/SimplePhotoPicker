@@ -1,4 +1,4 @@
-package com.example.photopickerlirary;
+package com.example.photopickerlirary.utils;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+
+import com.example.photopickerlirary.R;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

@@ -1,4 +1,4 @@
-package com.example.photopickerlirary;
+package com.example.photopickerlirary.entity;
 
 import android.support.annotation.NonNull;
 

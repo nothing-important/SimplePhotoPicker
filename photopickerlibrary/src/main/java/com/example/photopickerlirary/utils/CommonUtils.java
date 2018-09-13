@@ -1,4 +1,4 @@
-package com.example.photopickerlirary;
+package com.example.photopickerlirary.utils;
 
 import android.app.Activity;
 import android.content.Intent;

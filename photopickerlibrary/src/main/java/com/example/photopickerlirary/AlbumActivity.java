@@ -14,9 +14,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.example.photopickerlirary.adapter.AlbumAdapter;
+import com.example.photopickerlirary.entity.PhotoBean;
+import com.example.photopickerlirary.entity.PhotoParentBean;
+import com.example.photopickerlirary.utils.CommonUtils;
+import com.example.photopickerlirary.utils.ShareElementUtils;
+import com.example.photopickerlirary.utils.StatusBarUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -180,8 +186,13 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
     }
 
     @Override
-    public void onPhotoClick(int psn) {
-
+    public void onPhotoClick(View view , String photoUrl) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
+            ShareElementUtils.startWithShareElement(this , DetailActivity.class , photoUrl , view , "share_photo_img");
+        }else {
+            Intent intent = new Intent(this , DetailActivity.class);
+            intent.putExtra("urlExtra" , photoUrl);
+        }
     }
 
     @Override

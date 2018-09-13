@@ -7,6 +7,8 @@
     <application>
         <activity android:name=".AlbumActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".DetailActivity"
+            android:screenOrientation="portrait"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.example.photopickerlirary.fileprovider"

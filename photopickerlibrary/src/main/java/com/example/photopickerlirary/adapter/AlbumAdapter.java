@@ -1,4 +1,4 @@
-package com.example.photopickerlirary;
+package com.example.photopickerlirary.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,9 +13,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.MemoryCategory;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.photopickerlirary.R;
+import com.example.photopickerlirary.entity.PhotoBean;
 
 import java.util.List;
 
@@ -101,7 +102,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumAdapter
                 if (bean.getPath() == null && !bean.isSelected()){
                     photoClickListener.onCameraClick();
                 }else {
-                    photoClickListener.onPhotoClick(position);
+                    photoClickListener.onPhotoClick(holder.album_item_img , bean.getPath());
                 }
             }
         });
@@ -140,7 +141,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumAdapter
      */
     public interface PhotoClickListener{
         void onPhotoSelectClick(int psn);
-        void onPhotoClick(int psn);
+        void onPhotoClick(View view , String photoUrl);
         void onCameraClick();
     }
 

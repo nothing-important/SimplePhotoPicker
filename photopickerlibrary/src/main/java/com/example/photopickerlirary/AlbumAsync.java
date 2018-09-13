@@ -7,6 +7,8 @@ import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import com.example.photopickerlirary.entity.PhotoBean;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;

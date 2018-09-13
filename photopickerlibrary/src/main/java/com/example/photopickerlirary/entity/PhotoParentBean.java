@@ -1,4 +1,6 @@
-package com.example.photopickerlirary;
+package com.example.photopickerlirary.entity;
+
+import com.example.photopickerlirary.entity.PhotoBean;
 
 import java.util.List;
 
