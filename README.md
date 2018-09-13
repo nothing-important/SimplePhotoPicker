@@ -91,6 +91,8 @@
         1、界面的返回功能-->设置固定id：album_title_back
         2、界面的title-->设置固定id：album_title_name
         3、界面的提交功能-->设置固定id：album_title_finish
+        这三部分不需要必须是三个具体的控件，只要是view的子类即可，比如返回键是一张图片加文字，只要
+        给包裹图片和文字的控件设置上相应的id即可
         不要自己随意设置id，一定要使用这三个固定id
 
 
