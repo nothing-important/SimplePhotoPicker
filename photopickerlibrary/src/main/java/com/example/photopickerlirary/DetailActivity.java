@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.example.photopickerlirary.utils.ShareElementUtils;
@@ -16,7 +17,7 @@ import com.example.photopickerlirary.utils.StatusBarUtil;
 public class DetailActivity extends BaseActivity implements View.OnClickListener {
 
     private ImageView detail_img;
-    private LinearLayout detail_container;
+    private RelativeLayout detail_container;
     private String urlExtra;
 
     @Override
