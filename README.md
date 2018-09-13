@@ -46,7 +46,7 @@
             }
             
         dependencies {
-        	        implementation 'com.github.269138004:SimplePhotoPicker:v1.0'
+        	        implementation 'com.github.269138004:SimplePhotoPicker:v1.1'
         	}
         	
 #### maven
@@ -61,7 +61,7 @@
 	    <dependency>
         	    <groupId>com.github.269138004</groupId>
         	    <artifactId>SimplePhotoPicker</artifactId>
-        	    <version>v1.0</version>
+        	    <version>v1.1</version>
         </dependency>
         
 #### 使用
