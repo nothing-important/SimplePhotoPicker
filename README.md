@@ -47,6 +47,7 @@
             
         dependencies {
         	        implementation 'com.github.269138004:SimplePhotoPicker:v1.1'
+        	   
         	}
         	
 #### maven
