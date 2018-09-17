@@ -16,6 +16,7 @@ import com.example.photopickerlirary.BaseActivity;
 import com.example.photopickerlirary.R;
 import com.example.photopickerlirary.adapter.DetailAdapter;
 import com.example.photopickerlirary.entity.PhotoBean;
+import com.example.photopickerlirary.interfaces.DetailPhotoClick;
 import com.example.photopickerlirary.interfaces.PhotoDetailSelect;
 import com.example.photopickerlirary.utils.ShareElementUtils;
 import com.example.photopickerlirary.utils.StatusBarUtil;
@@ -23,7 +24,7 @@ import com.example.photopickerlirary.widget.ViewPagerExtend;
 
 import java.util.List;
 
-public class DetailActivity extends BaseActivity implements View.OnClickListener {
+public class DetailActivity extends BaseActivity implements View.OnClickListener, DetailPhotoClick {
 
     private ViewPagerExtend detail_vp;
     private List<PhotoBean> urlExtra;
@@ -52,6 +53,7 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
     private void initView() {
         detail_vp = findViewById(R.id.detail_vp);
         DetailAdapter detailAdapter = new DetailAdapter(urlExtra , this);
+        detailAdapter.setOnDetailPhotoClickListener(this);
         detail_vp.setAdapter(detailAdapter);
         detail_vp.setCurrentItem(currentPsn);
         detail_vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -91,4 +93,8 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
         photoDetailSelect = photoDetailSelected;
     }
 
+    @Override
+    public void onDetailPhotoClick(int psn) {
+        ShareElementUtils.closeActivity(this);
+    }
 }
