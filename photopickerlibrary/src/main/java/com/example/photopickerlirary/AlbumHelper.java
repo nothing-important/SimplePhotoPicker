@@ -5,6 +5,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 
 import com.example.photopickerlirary.activity.AlbumActivity;
+import com.example.photopickerlirary.interfaces.SelectPhotoResult;
 
 import java.util.ArrayList;
 

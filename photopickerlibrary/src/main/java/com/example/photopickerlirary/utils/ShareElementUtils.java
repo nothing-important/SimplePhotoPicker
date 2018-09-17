@@ -16,10 +16,9 @@ import java.util.List;
 public class ShareElementUtils {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public static void startWithShareElement(Activity activity , Class targetClass , int currentPosition , List<PhotoBean> urlExtra , View shareView , String shareTag){
+    public static void startWithShareElement(Activity activity , Class targetClass , List<PhotoBean> urlExtra , View shareView , String shareTag){
         Intent intent = new Intent(activity , targetClass);
         intent.putExtra("urlExtra" , (Serializable) urlExtra);
-        intent.putExtra("currentPosition" , currentPosition);
         ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(activity , shareView ,shareTag);
         activity.startActivity(intent , activityOptions.toBundle());
     }

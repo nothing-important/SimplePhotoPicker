@@ -16,6 +16,7 @@ import com.example.photopickerlirary.BaseActivity;
 import com.example.photopickerlirary.R;
 import com.example.photopickerlirary.adapter.DetailAdapter;
 import com.example.photopickerlirary.entity.PhotoBean;
+import com.example.photopickerlirary.interfaces.PhotoDetailSelect;
 import com.example.photopickerlirary.utils.ShareElementUtils;
 import com.example.photopickerlirary.utils.StatusBarUtil;
 import com.example.photopickerlirary.widget.ViewPagerExtend;
@@ -26,7 +27,10 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
 
     private ViewPagerExtend detail_vp;
     private List<PhotoBean> urlExtra;
-    public static int currentPosition;
+    public static int currentPosition;//退出时当前图片在上个界面recyclerview中的位置
+    public static int currentPsn;//当前图片在该界面的位置
+    public static PhotoDetailSelect photoDetailSelect;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,14 +47,13 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
         Intent intent = getIntent();
         if (intent == null)return;
         urlExtra = (List<PhotoBean>) intent.getSerializableExtra("urlExtra");
-        currentPosition = intent.getIntExtra("currentPosition" , 0);
     }
 
     private void initView() {
         detail_vp = findViewById(R.id.detail_vp);
         DetailAdapter detailAdapter = new DetailAdapter(urlExtra , this);
         detail_vp.setAdapter(detailAdapter);
-        detail_vp.setCurrentItem(currentPosition);
+        detail_vp.setCurrentItem(currentPsn);
         detail_vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -59,7 +62,8 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
 
             @Override
             public void onPageSelected(int position) {
-                currentPosition = position ;
+                currentPosition = position + 1;
+                photoDetailSelect.onPhotoDetailSelected(position);
             }
 
             @Override
@@ -81,6 +85,10 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void onClick(View v) {
         int i = v.getId();
+    }
+
+    public static void setOnPhotoDetailSelected(PhotoDetailSelect photoDetailSelected){
+        photoDetailSelect = photoDetailSelected;
     }
 
 }

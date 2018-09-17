@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.photopickerlirary.AlbumHelper;
-import com.example.photopickerlirary.SelectPhotoResult;
+import com.example.photopickerlirary.interfaces.SelectPhotoResult;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.photopickerlirary;
+package com.example.photopickerlirary.interfaces;
 
 import java.util.ArrayList;
 import java.util.List;

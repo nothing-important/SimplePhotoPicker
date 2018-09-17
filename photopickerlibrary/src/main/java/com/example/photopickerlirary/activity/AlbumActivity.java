@@ -21,8 +21,10 @@ import android.widget.Toast;
 
 import com.example.photopickerlirary.AlbumAsync;
 import com.example.photopickerlirary.BaseActivity;
+import com.example.photopickerlirary.Configs;
 import com.example.photopickerlirary.R;
-import com.example.photopickerlirary.SelectPhotoResult;
+import com.example.photopickerlirary.interfaces.PhotoDetailSelect;
+import com.example.photopickerlirary.interfaces.SelectPhotoResult;
 import com.example.photopickerlirary.adapter.AlbumAdapter;
 import com.example.photopickerlirary.entity.PhotoBean;
 import com.example.photopickerlirary.entity.PhotoParentBean;
@@ -39,19 +41,9 @@ import java.util.List;
 import java.util.Map;
 
 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadListener, AlbumAdapter.PhotoClickListener, BaseActivity.PermissionRequestListener, View.OnClickListener {
+public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadListener, AlbumAdapter.PhotoClickListener, BaseActivity.PermissionRequestListener, View.OnClickListener, PhotoDetailSelect {
 
     private static final String TAG = "AlbumActivity";
-
-    private static final int READ_PERMISSION_CODE = 111;
-    private static final int CAMERA_PERMISSION_CODE = 112;
-    private static final int CAMERA_SHOT_REQUEST_CODE = 113;
-    public static final String PICK_PHOTO_NUMS_FLAG = "pick_photo_nums_flag";
-    public static final String ALREADY_PICK_PHOTO_LIST = "already_pick_photo_list";
-    public static final String ADAPTER_SELECT_IMG = "adapter_select_img";
-    public static final String ADAPTER_UNSELECT_IMG = "adapter_unselect_img";
-    public static final String ADAPTER_CAMEAR_IMG = "adapter_camear_img";
-    public static final String ALBUM_TITLE_VIEW = "album_title_view";
 
     private int selectImg , unSelectImg , camearImg , titleView;
 
@@ -75,11 +67,12 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
         StatusBarUtil.setColorNoTranslucent(this, getResources().getColor(R.color.transprent));
         initIntent();
         initView();
+        DetailActivity.setOnPhotoDetailSelected(this);
         ActivityCompat.setExitSharedElementCallback(this, new SharedElementCallback() {
             @Override
             public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
                 super.onMapSharedElements(names, sharedElements);
-                sharedElements.put("share_photo_img" , recycler.getChildAt(DetailActivity.currentPosition));
+                sharedElements.put("share_photo_img" , getViewByPsn(DetailActivity.currentPosition));
             }
         });
     }
@@ -87,12 +80,12 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
     private void initIntent() {
         Intent intent = getIntent();
         if (intent == null)return;
-        pickPhotoNums = intent.getIntExtra(PICK_PHOTO_NUMS_FLAG , 1);
-        listExtra = intent.getStringArrayListExtra(ALREADY_PICK_PHOTO_LIST);
-        selectImg = intent.getIntExtra(ADAPTER_SELECT_IMG , 0);
-        unSelectImg = intent.getIntExtra(ADAPTER_UNSELECT_IMG , 0);
-        camearImg = intent.getIntExtra(ADAPTER_CAMEAR_IMG , 0);
-        titleView = intent.getIntExtra(ALBUM_TITLE_VIEW , 0);
+        pickPhotoNums = intent.getIntExtra(Configs.PICK_PHOTO_NUMS_FLAG , 1);
+        listExtra = intent.getStringArrayListExtra(Configs.ALREADY_PICK_PHOTO_LIST);
+        selectImg = intent.getIntExtra(Configs.ADAPTER_SELECT_IMG , 0);
+        unSelectImg = intent.getIntExtra(Configs.ADAPTER_UNSELECT_IMG , 0);
+        camearImg = intent.getIntExtra(Configs.ADAPTER_CAMEAR_IMG , 0);
+        titleView = intent.getIntExtra(Configs.ALBUM_TITLE_VIEW , 0);
         if (listExtra == null)return;
         for (int i = 0; i < listExtra.size() ; i ++){
             PhotoBean bean = new PhotoBean();
@@ -202,19 +195,17 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
 
     @Override
     public void onPhotoClick(View view , String photoUrl , int psn) {
-//        List<PhotoBean> resultBean = new ArrayList<>();
-//        resultBean.clear();
-//        resultBean.addAll(photoPath);
-//        resultBean.remove(0);
-//        DetailActivity.currentPosition = psn;
-//        int resultPsn = psn - 1;
+        List<PhotoBean> resultBean = new ArrayList<>();
+        resultBean.clear();
+        resultBean.addAll(photoPath);
+        resultBean.remove(0);
         DetailActivity.currentPosition = psn;
+        DetailActivity.currentPsn = psn - 1;
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
-            ShareElementUtils.startWithShareElement(this , DetailActivity.class , psn , photoPath , view , "share_photo_img");
+            ShareElementUtils.startWithShareElement(this , DetailActivity.class , resultBean , view , "share_photo_img");
         }else {
             Intent intent = new Intent(this , DetailActivity.class);
-            intent.putExtra("urlExtra" , (Serializable) photoPath);
-            intent.putExtra("currentPosition" , psn);
+            intent.putExtra("urlExtra" , (Serializable) resultBean);
         }
     }
 
@@ -226,14 +217,14 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
     @Override
     public void onPermissionGranted(int requestCode , List<String> allGrantedPermission) {
         switch (requestCode){
-            case READ_PERMISSION_CODE:
+            case Configs.READ_PERMISSION_CODE:
                 AlbumAsync albmAsyn = new AlbumAsync(this);
                 albmAsyn.execute("");
                 albmAsyn.setOnPhotoLoadListener(this);
                 break;
-            case CAMERA_PERMISSION_CODE:
+            case Configs.CAMERA_PERMISSION_CODE:
                 tempFile = CommonUtils.createTempFile();
-                CommonUtils.toSystemPhotoCapturer(this , CAMERA_SHOT_REQUEST_CODE , tempFile);
+                CommonUtils.toSystemPhotoCapturer(this , Configs.CAMERA_SHOT_REQUEST_CODE , tempFile);
                 break;
         }
     }
@@ -241,28 +232,28 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
     @Override
     public void onPermissionDenied(int requestCode , List<String> deniedPermissions) {
         switch (requestCode){
-            case READ_PERMISSION_CODE:
+            case Configs.READ_PERMISSION_CODE:
                 showSettingDialog(this);
                 break;
-            case CAMERA_PERMISSION_CODE:
+            case Configs.CAMERA_PERMISSION_CODE:
                 showSettingDialog(this);
                 break;
         }
     }
 
     private void requestReadPermission(){
-        requestSelfPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE , Manifest.permission.WRITE_EXTERNAL_STORAGE} , READ_PERMISSION_CODE , this);
+        requestSelfPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE , Manifest.permission.WRITE_EXTERNAL_STORAGE} , Configs.READ_PERMISSION_CODE , this);
     }
 
     private void requestCameraPermission(){
-        requestSelfPermissions(new String[]{Manifest.permission.CAMERA} , CAMERA_PERMISSION_CODE , this);
+        requestSelfPermissions(new String[]{Manifest.permission.CAMERA} , Configs.CAMERA_PERMISSION_CODE , this);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK){
-            if (requestCode == CAMERA_SHOT_REQUEST_CODE){
+            if (requestCode ==Configs. CAMERA_SHOT_REQUEST_CODE){
                 if (tempFile != null){
                     Uri uri = Uri.fromFile(tempFile);
                     AlbumActivity.this.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
@@ -302,16 +293,31 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
 
     public static void toAlbumActivity(Context context , int pickPhotoNums , ArrayList<String> list , int selectImg , int unSelectImg , int camearImg , int titleView){
         Intent intent = new Intent(context , AlbumActivity.class);
-        intent.putExtra(PICK_PHOTO_NUMS_FLAG , pickPhotoNums);
-        intent.putStringArrayListExtra(ALREADY_PICK_PHOTO_LIST , list);
-        intent.putExtra(ADAPTER_SELECT_IMG , selectImg);
-        intent.putExtra(ADAPTER_UNSELECT_IMG , unSelectImg);
-        intent.putExtra(ADAPTER_CAMEAR_IMG , camearImg);
-        intent.putExtra(ALBUM_TITLE_VIEW , titleView);
+        intent.putExtra(Configs.PICK_PHOTO_NUMS_FLAG , pickPhotoNums);
+        intent.putStringArrayListExtra(Configs.ALREADY_PICK_PHOTO_LIST , list);
+        intent.putExtra(Configs.ADAPTER_SELECT_IMG , selectImg);
+        intent.putExtra(Configs.ADAPTER_UNSELECT_IMG , unSelectImg);
+        intent.putExtra(Configs.ADAPTER_CAMEAR_IMG , camearImg);
+        intent.putExtra(Configs.ALBUM_TITLE_VIEW , titleView);
         context.startActivity(intent);
     }
 
     public static void setOnSelectResultListener(SelectPhotoResult selectResult){
         selectPhotoResult = selectResult;
+    }
+
+    private View getViewByPsn(int psn){
+        for (int i = 0 ; i < recycler.getChildCount() ; i ++){
+            View childAt = recycler.getChildAt(i);
+            if (psn == (int) childAt.getTag(R.id.album_item_select)){
+                return childAt;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void onPhotoDetailSelected(int psn) {
+        recycler.smoothScrollToPosition(psn);
     }
 }

@@ -53,6 +53,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumAdapter
     public void onBindViewHolder(@NonNull final AlbumAdapter_VH holder, final int position) {
         final PhotoBean bean = list.get(position);
         holder.album_item_select.setImageResource(R.drawable.icon_unselect);
+        holder.itemView.setTag(R.id.album_item_select , position);
         final FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) holder.album_item_img.getLayoutParams();
         layoutParams.width = viewWidth;
         layoutParams.height = viewWidth;
