@@ -5,9 +5,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <application>
-        <activity android:name=".AlbumActivity"
+        <activity android:name=".activity.AlbumActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".DetailActivity"
+        <activity android:name=".activity.DetailActivity"
             android:screenOrientation="portrait"/>
         <provider
             android:name="android.support.v4.content.FileProvider"

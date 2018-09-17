@@ -2,7 +2,9 @@ package com.example.photopickerlirary.entity;
 
 import android.support.annotation.NonNull;
 
-public class PhotoBean implements Comparable<PhotoBean>{
+import java.io.Serializable;
+
+public class PhotoBean implements Serializable{
 
     private String path;
     private boolean isSelected;
@@ -21,11 +23,5 @@ public class PhotoBean implements Comparable<PhotoBean>{
 
     public void setSelected(boolean selected) {
         isSelected = selected;
-    }
-
-    @Override
-    public int compareTo(@NonNull PhotoBean photoBean) {
-
-        return 0;
     }
 }

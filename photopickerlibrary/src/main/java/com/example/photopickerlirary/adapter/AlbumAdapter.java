@@ -17,6 +17,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.photopickerlirary.R;
 import com.example.photopickerlirary.entity.PhotoBean;
+import com.example.photopickerlirary.widget.RoundImageView;
 
 import java.util.List;
 
@@ -67,7 +68,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumAdapter
             holder.album_item_select.setVisibility(View.VISIBLE);
             RequestOptions requestOptions = new RequestOptions();
             requestOptions.diskCacheStrategy(DiskCacheStrategy.DATA);
-            Glide.with(context).load(bean.getPath()).apply(requestOptions).thumbnail(0.4f).into(holder.album_item_img);
+            Glide.with(context).load(bean.getPath()).apply(requestOptions).into(holder.album_item_img);
             if (bean.isSelected()){
                 if (selectImg != 0){
                     holder.album_item_select.setImageResource(selectImg);
@@ -102,7 +103,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumAdapter
                 if (bean.getPath() == null && !bean.isSelected()){
                     photoClickListener.onCameraClick();
                 }else {
-                    photoClickListener.onPhotoClick(holder.album_item_img , bean.getPath());
+                    photoClickListener.onPhotoClick(holder.album_item_img , bean.getPath() , position);
                 }
             }
         });
@@ -114,7 +115,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumAdapter
     }
 
     static class AlbumAdapter_VH extends RecyclerView.ViewHolder{
-        ImageView album_item_img , album_item_select;
+        ImageView album_item_select;
+        RoundImageView album_item_img;
         public AlbumAdapter_VH(View itemView) {
             super(itemView);
             album_item_img = itemView.findViewById(R.id.album_item_img);
@@ -141,7 +143,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumAdapter
      */
     public interface PhotoClickListener{
         void onPhotoSelectClick(int psn);
-        void onPhotoClick(View view , String photoUrl);
+        void onPhotoClick(View view , String photoUrl , int psn);
         void onCameraClick();
     }
 

@@ -8,12 +8,18 @@ import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.view.Window;
 
+import com.example.photopickerlirary.entity.PhotoBean;
+
+import java.io.Serializable;
+import java.util.List;
+
 public class ShareElementUtils {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public static void startWithShareElement(Activity activity , Class targetClass , String urlExtra , View shareView , String shareTag){
+    public static void startWithShareElement(Activity activity , Class targetClass , int currentPosition , List<PhotoBean> urlExtra , View shareView , String shareTag){
         Intent intent = new Intent(activity , targetClass);
-        intent.putExtra("urlExtra" , urlExtra);
+        intent.putExtra("urlExtra" , (Serializable) urlExtra);
+        intent.putExtra("currentPosition" , currentPosition);
         ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(activity , shareView ,shareTag);
         activity.startActivity(intent , activityOptions.toBundle());
     }

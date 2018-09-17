@@ -1,4 +1,4 @@
-package com.example.photopickerlirary;
+package com.example.photopickerlirary.activity;
 
 import android.Manifest;
 import android.content.Context;
@@ -8,6 +8,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.SharedElementCallback;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,6 +19,10 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
+import com.example.photopickerlirary.AlbumAsync;
+import com.example.photopickerlirary.BaseActivity;
+import com.example.photopickerlirary.R;
+import com.example.photopickerlirary.SelectPhotoResult;
 import com.example.photopickerlirary.adapter.AlbumAdapter;
 import com.example.photopickerlirary.entity.PhotoBean;
 import com.example.photopickerlirary.entity.PhotoParentBean;
@@ -25,6 +31,7 @@ import com.example.photopickerlirary.utils.ShareElementUtils;
 import com.example.photopickerlirary.utils.StatusBarUtil;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -58,6 +65,7 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
     private static SelectPhotoResult selectPhotoResult;
     private ArrayList<String> listExtra;
     private LinearLayout album_container , album_old_title;
+    private RecyclerView recycler;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,6 +75,13 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
         StatusBarUtil.setColorNoTranslucent(this, getResources().getColor(R.color.transprent));
         initIntent();
         initView();
+        ActivityCompat.setExitSharedElementCallback(this, new SharedElementCallback() {
+            @Override
+            public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+                super.onMapSharedElements(names, sharedElements);
+                sharedElements.put("share_photo_img" , recycler.getChildAt(DetailActivity.currentPosition));
+            }
+        });
     }
 
     private void initIntent() {
@@ -88,7 +103,7 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
     }
 
     private void initView() {
-        RecyclerView recycler = findViewById(R.id.recycler);
+        recycler = findViewById(R.id.recycler);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this , 4);
         recycler.setLayoutManager(gridLayoutManager);
         albumAdapter = new AlbumAdapter(photoPath , this , selectImg , unSelectImg , camearImg);
@@ -186,12 +201,20 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
     }
 
     @Override
-    public void onPhotoClick(View view , String photoUrl) {
+    public void onPhotoClick(View view , String photoUrl , int psn) {
+//        List<PhotoBean> resultBean = new ArrayList<>();
+//        resultBean.clear();
+//        resultBean.addAll(photoPath);
+//        resultBean.remove(0);
+//        DetailActivity.currentPosition = psn;
+//        int resultPsn = psn - 1;
+        DetailActivity.currentPosition = psn;
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
-            ShareElementUtils.startWithShareElement(this , DetailActivity.class , photoUrl , view , "share_photo_img");
+            ShareElementUtils.startWithShareElement(this , DetailActivity.class , psn , photoPath , view , "share_photo_img");
         }else {
             Intent intent = new Intent(this , DetailActivity.class);
-            intent.putExtra("urlExtra" , photoUrl);
+            intent.putExtra("urlExtra" , (Serializable) photoPath);
+            intent.putExtra("currentPosition" , psn);
         }
     }
 

@@ -1,12 +1,12 @@
 package com.example.photopickerlirary;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
+import com.example.photopickerlirary.activity.AlbumActivity;
+
 import java.util.ArrayList;
-import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
 public class AlbumHelper {

@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_weight="1"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
     android:layout_marginTop="10dp"
     android:layout_marginBottom="5dp"
     android:layout_height="wrap_content">
-    <ImageView
+    <com.example.photopickerlirary.widget.RoundImageView
         android:transitionName="share_photo_img"
         android:scaleType="centerCrop"
         android:id="@+id/album_item_img"
+        app:imageViewType="round"
+        app:roundborderRadius="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <ImageView
