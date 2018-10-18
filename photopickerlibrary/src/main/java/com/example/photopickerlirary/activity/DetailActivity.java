@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.photopickerlirary.BaseActivity;
@@ -39,7 +40,6 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
         setContentView(R.layout.activity_detail);
         StatusBarUtil.setDarkMode(this);
         StatusBarUtil.setColorNoTranslucent(this, getResources().getColor(R.color.transprent));
-        ShareElementUtils.applyShareElement(this);
         initIntent();
         initView();
     }
@@ -93,8 +93,13 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
         photoDetailSelect = photoDetailSelected;
     }
 
+    /**
+     * 图片详情单击-->销毁当前界面
+     * @param psn
+     */
     @Override
     public void onDetailPhotoClick(int psn) {
         ShareElementUtils.closeActivity(this);
     }
+
 }

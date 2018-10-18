@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 
 import com.example.photopickerlirary.AlbumAsync;
+import com.example.photopickerlirary.AlbumHelper;
 import com.example.photopickerlirary.BaseActivity;
 import com.example.photopickerlirary.Configs;
 import com.example.photopickerlirary.R;
@@ -68,11 +69,12 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
         initIntent();
         initView();
         DetailActivity.setOnPhotoDetailSelected(this);
+        //保证当退出详情页面后返回到相应的图片位置
         ActivityCompat.setExitSharedElementCallback(this, new SharedElementCallback() {
             @Override
             public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
                 super.onMapSharedElements(names, sharedElements);
-                sharedElements.put("share_photo_img" , getViewByPsn(DetailActivity.currentPosition));
+                sharedElements.put(getResources().getString(R.string.share_photo_detail) , getViewByPsn(DetailActivity.currentPosition));
             }
         });
     }
@@ -201,12 +203,9 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
         resultBean.remove(0);
         DetailActivity.currentPosition = psn;
         DetailActivity.currentPsn = psn - 1;
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
-            ShareElementUtils.startWithShareElement(this , DetailActivity.class , resultBean , view , "share_photo_img");
-        }else {
-            Intent intent = new Intent(this , DetailActivity.class);
-            intent.putExtra("urlExtra" , (Serializable) resultBean);
-        }
+        Intent intent = new Intent(AlbumActivity.this, DetailActivity.class);
+        intent.putExtra("urlExtra" , (Serializable) resultBean);
+        ShareElementUtils.transToNextWithElement(AlbumActivity.this , intent , view , getResources().getString(R.string.share_photo_detail));
     }
 
     @Override

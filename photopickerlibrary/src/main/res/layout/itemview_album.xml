@@ -9,7 +9,7 @@
     android:layout_marginBottom="5dp"
     android:layout_height="wrap_content">
     <com.example.photopickerlirary.widget.RoundImageView
-        android:transitionName="share_photo_img"
+        android:transitionName="@string/share_photo_detail"
         android:scaleType="centerCrop"
         android:id="@+id/album_item_img"
         app:imageViewType="round"

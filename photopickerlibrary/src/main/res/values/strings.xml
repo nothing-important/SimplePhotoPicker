@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PhotoPickerLirary</string>
+    <string name="share_photo_detail">share_photo_detail</string>
 </resources>

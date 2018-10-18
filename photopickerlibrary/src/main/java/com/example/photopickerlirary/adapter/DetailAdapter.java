@@ -3,13 +3,17 @@ package com.example.photopickerlirary.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.photopickerlirary.R;
 import com.example.photopickerlirary.entity.PhotoBean;
 import com.example.photopickerlirary.interfaces.DetailPhotoClick;
+import com.example.photopickerlirary.utils.OnDoubleClick;
+import com.example.photopickerlirary.widget.ZoomImageView;
 
 import java.util.List;
 
@@ -37,18 +41,17 @@ public class DetailAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
-
-        ImageView imageView = new ImageView(context);
-        Glide.with(context).load(list.get(position).getPath()).into(imageView);
-        container.addView(imageView);
-        imageView.setOnClickListener(new View.OnClickListener() {
+        ZoomImageView zoomView = new ZoomImageView(context);
+        Glide.with(context).load(list.get(position).getPath()).into(zoomView);
+        container.addView(zoomView);
+        zoomView.setOnSingleClickListener(new ZoomImageView.SingleClick() {
             @Override
-            public void onClick(View v) {
+            public void onSingleClick() {
                 if (detailPhotoClick == null)return;
                 detailPhotoClick.onDetailPhotoClick(position);
             }
         });
-        return imageView;
+        return zoomView;
     }
 
     @Override
