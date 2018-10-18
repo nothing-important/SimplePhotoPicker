@@ -161,11 +161,13 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
                 if (getCurrentScale() > initScaleSize){//说明图片的某一条边已经放大到超过屏幕，此时允许拖动
                     RectF drawableRect = getDrawableRect();
                     if (drawableRect == null)return true;
+                    //缩放时不拦截
                     if (getCurrentScale() > initScaleSize){
                         getParent().requestDisallowInterceptTouchEvent(true);
                     }else {
                         getParent().requestDisallowInterceptTouchEvent(false);
                     }
+                    //图片不到边界时不拦截
                     if (drawableRect.left >= -5 || drawableRect.right <= viewWidth + 5 || drawableRect.top >= -5 || drawableRect.bottom <= viewHeight + 5){
                         getParent().requestDisallowInterceptTouchEvent(false);
                     }else {
