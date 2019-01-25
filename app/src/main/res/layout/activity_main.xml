@@ -10,7 +10,7 @@
         android:id="@+id/btn_one"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="click_one"/>
+        android:text="click_one->不可进入图片详情"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyler_one"
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
         android:id="@+id/btn_two"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="click_two"/>
+        android:text="click_two->可进入图片详情"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyler_two"
         android:layout_width="match_parent"

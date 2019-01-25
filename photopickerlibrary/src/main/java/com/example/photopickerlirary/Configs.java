@@ -11,5 +11,6 @@ public class Configs {
     public static final String ADAPTER_UNSELECT_IMG = "adapter_unselect_img";
     public static final String ADAPTER_CAMEAR_IMG = "adapter_camear_img";
     public static final String ALBUM_TITLE_VIEW = "album_title_view";
+    public static final String ALBUM_IS_IN_DETAIL_PAGE = "album_is_in_detail_page";
 
 }

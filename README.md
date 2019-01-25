@@ -31,6 +31,10 @@
 ##### 6.动态设置了Imageview的宽高，几乎可以适配所有屏幕
 ##### 7.类似于微信点击图片查看详情(图片的放大缩小功能)的切换效果
 
+目前存在的一些问题
+--------------
+##### 1.图片放大缩小功能存在滑动不流畅问题
+
 使用方法
 -------
 
@@ -71,6 +75,7 @@
         .with(MainActivity.this)
         .setPickPhotoNums(5)//可选图片数量，默认1
         .setResultPhotoList((ArrayList<String>) list_one)//接收图片结果的list集合，必须要写，不然无法记录原来已选的
+        .isInDetailpage(false)//是否可以进入下一界面查看图片详情，默认可查看
         .setSelectImg(R.mipmap.ic_launcher)//设置图片选中表示，可不写，有默认
         .setUnSelectImg(R.mipmap.ic_launcher)//设置图片未选中表示，可不写，有默认
         .setCameraImg(R.mipmap.ic_launcher)//设置相机图片icon，可不写，有默认

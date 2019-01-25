@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 new AlbumHelper()
                         .with(MainActivity.this)
                         .setPickPhotoNums(5)
+                        .isInDetailpage(false)
                         .setTitleView(R.layout.title_view)
                         .setResultPhotoList((ArrayList<String>) list_one)
                         .setOnReceiveResultListener(new SelectPhotoResult() {

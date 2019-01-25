@@ -53,6 +53,7 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
     private List<PhotoBean> currentPickPhotoList = new ArrayList<>();//当前选中图片集合
     private AlbumAdapter albumAdapter;
     private int pickPhotoNums = 1;
+    private boolean isInDetailpage = true;
     private File tempFile;
 
     private static SelectPhotoResult selectPhotoResult;
@@ -88,6 +89,7 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
         unSelectImg = intent.getIntExtra(Configs.ADAPTER_UNSELECT_IMG , 0);
         camearImg = intent.getIntExtra(Configs.ADAPTER_CAMEAR_IMG , 0);
         titleView = intent.getIntExtra(Configs.ALBUM_TITLE_VIEW , 0);
+        isInDetailpage = intent.getBooleanExtra(Configs.ALBUM_IS_IN_DETAIL_PAGE , true);
         if (listExtra == null)return;
         for (int i = 0; i < listExtra.size() ; i ++){
             PhotoBean bean = new PhotoBean();
@@ -173,6 +175,9 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
         albumAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * 选中图片
+     */
     @Override
     public void onPhotoSelectClick(int psn) {
         PhotoBean photoBean = photoPath.get(psn);
@@ -195,8 +200,12 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
         albumAdapter.notifyItemChanged(psn);
     }
 
+    /**
+     * 查看图片详情
+     */
     @Override
     public void onPhotoClick(View view , String photoUrl , int psn) {
+        if (!isInDetailpage)return;
         List<PhotoBean> resultBean = new ArrayList<>();
         resultBean.clear();
         resultBean.addAll(photoPath);
@@ -208,9 +217,20 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
         ShareElementUtils.transToNextWithElement(AlbumActivity.this , intent , view , getResources().getString(R.string.share_photo_detail));
     }
 
+    /**
+     * 调用系统相机拍照
+     */
     @Override
     public void onCameraClick() {
         requestCameraPermission();
+    }
+
+    /**
+     * 滑动到图片相应位置
+     */
+    @Override
+    public void onPhotoDetailSelected(int psn) {
+        recycler.smoothScrollToPosition(psn);
     }
 
     @Override
@@ -290,7 +310,7 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
         }
     }
 
-    public static void toAlbumActivity(Context context , int pickPhotoNums , ArrayList<String> list , int selectImg , int unSelectImg , int camearImg , int titleView){
+    public static void toAlbumActivity(Context context , int pickPhotoNums , ArrayList<String> list , int selectImg , int unSelectImg , int camearImg , int titleView , boolean isInDetailpage){
         Intent intent = new Intent(context , AlbumActivity.class);
         intent.putExtra(Configs.PICK_PHOTO_NUMS_FLAG , pickPhotoNums);
         intent.putStringArrayListExtra(Configs.ALREADY_PICK_PHOTO_LIST , list);
@@ -298,6 +318,7 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
         intent.putExtra(Configs.ADAPTER_UNSELECT_IMG , unSelectImg);
         intent.putExtra(Configs.ADAPTER_CAMEAR_IMG , camearImg);
         intent.putExtra(Configs.ALBUM_TITLE_VIEW , titleView);
+        intent.putExtra(Configs.ALBUM_IS_IN_DETAIL_PAGE , isInDetailpage);
         context.startActivity(intent);
     }
 
@@ -313,10 +334,5 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
             }
         }
         return null;
-    }
-
-    @Override
-    public void onPhotoDetailSelected(int psn) {
-        recycler.smoothScrollToPosition(psn);
     }
 }
