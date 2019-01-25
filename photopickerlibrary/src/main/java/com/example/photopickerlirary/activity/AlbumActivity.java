@@ -180,6 +180,30 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
      */
     @Override
     public void onPhotoSelectClick(int psn) {
+        selectPhoto(psn);
+    }
+
+    /**
+     * 查看图片详情
+     */
+    @Override
+    public void onPhotoClick(View view , String photoUrl , int psn) {
+        if (isInDetailpage){
+            List<PhotoBean> resultBean = new ArrayList<>();
+            resultBean.clear();
+            resultBean.addAll(photoPath);
+            resultBean.remove(0);
+            DetailActivity.currentPosition = psn;
+            DetailActivity.currentPsn = psn - 1;
+            Intent intent = new Intent(AlbumActivity.this, DetailActivity.class);
+            intent.putExtra("urlExtra" , (Serializable) resultBean);
+            ShareElementUtils.transToNextWithElement(AlbumActivity.this , intent , view , getResources().getString(R.string.share_photo_detail));
+        }else {
+            selectPhoto(psn);
+        }
+    }
+
+    private void selectPhoto(int psn){
         PhotoBean photoBean = photoPath.get(psn);
         if (photoBean.isSelected()){
             photoBean.setSelected(!photoBean.isSelected());
@@ -198,23 +222,6 @@ public class AlbumActivity extends BaseActivity implements AlbumAsync.PhotoLoadL
             }
         }
         albumAdapter.notifyItemChanged(psn);
-    }
-
-    /**
-     * 查看图片详情
-     */
-    @Override
-    public void onPhotoClick(View view , String photoUrl , int psn) {
-        if (!isInDetailpage)return;
-        List<PhotoBean> resultBean = new ArrayList<>();
-        resultBean.clear();
-        resultBean.addAll(photoPath);
-        resultBean.remove(0);
-        DetailActivity.currentPosition = psn;
-        DetailActivity.currentPsn = psn - 1;
-        Intent intent = new Intent(AlbumActivity.this, DetailActivity.class);
-        intent.putExtra("urlExtra" , (Serializable) resultBean);
-        ShareElementUtils.transToNextWithElement(AlbumActivity.this , intent , view , getResources().getString(R.string.share_photo_detail));
     }
 
     /**

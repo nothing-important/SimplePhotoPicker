@@ -17,6 +17,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.photopickerlirary.R;
 import com.example.photopickerlirary.entity.PhotoBean;
+import com.example.photopickerlirary.utils.GlideUtil;
 import com.example.photopickerlirary.widget.RoundImageView;
 
 import java.util.List;
@@ -61,15 +62,13 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumAdapter
         if (bean.getPath() == null && !bean.isSelected()){//相机
             holder.album_item_select.setVisibility(View.GONE);
             if (camearImg != 0){
-                Glide.with(context).load(camearImg).into(holder.album_item_img);
+                GlideUtil.getGlideUtil().with(context).loadImageNormal(camearImg , holder.album_item_img);
             }else {
-                Glide.with(context).load(R.drawable.camera).into(holder.album_item_img);
+                GlideUtil.getGlideUtil().with(context).loadImageNormal(R.drawable.camera , holder.album_item_img);
             }
         }else {//图片
             holder.album_item_select.setVisibility(View.VISIBLE);
-            RequestOptions requestOptions = new RequestOptions();
-            requestOptions.diskCacheStrategy(DiskCacheStrategy.DATA);
-            Glide.with(context).load(bean.getPath()).apply(requestOptions).into(holder.album_item_img);
+            GlideUtil.getGlideUtil().with(context).loadImageNormal(bean.getPath() , holder.album_item_img);
             if (bean.isSelected()){
                 if (selectImg != 0){
                     holder.album_item_select.setImageResource(selectImg);
